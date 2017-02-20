@@ -34,10 +34,27 @@ var HelloWorld = React.createClass({
             </p>
         );
     }
+});
+
+var Buttonify = React.createClass({
+    render: function() {
+        return (
+        <div>
+        <button type={this.props.behavoir}>
+            {this.props.children}
+        </button>
+        </div>
+        );
+    }
 
 });
+
 ReactDOM.render(
-    <HelloWorld greetTarget="Troy"/>,
+    <div>
+    <Buttonify behavoir="Submit">
+    SEND DATA
+    </Buttonify>
+    </div>,
     document.querySelector("#container")
 );
 </script>
