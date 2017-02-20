@@ -25,11 +25,18 @@
 </div>
 
 <script type="text/babel">
-var app = document.querySelector("#container");
 
+var HelloWorld = React.createClass({
+    render: function() {
+        return (
+            <p>Hello, componentized world!</p>
+        );
+    }
+
+});
 ReactDOM.render(
-    <h1>Sherlock Holmes</h1>,
-    app
+    <HelloWorld/>,
+    document.querySelector("#container")
 );
 </script>
 
