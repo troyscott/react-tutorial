@@ -47,9 +47,17 @@ function showCircle() {
     return <Circle bgColor={colors[ran]}/>;
 }
 
+var colors = ["#393E41","#E94F37","#A1D363", "#1C89BF"];
+
+var renderData = [];
+
+for(var i=0;i < colors.length;i++) {
+    renderData.push(<Circle key={i + color } bgColor={colors[i]}/>);
+}
+
 ReactDOM.render(
     <div>
-        {showCircle()}
+        {renderData}
     </div>
     ,destination
 
