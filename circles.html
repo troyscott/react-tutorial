@@ -41,10 +41,15 @@ var Circle = React.createClass({
 
 var destination = document.querySelector("#container");
 var theCircle = <Circle bgColor="#F9C240"/>;
+function showCircle() {
+    var colors = ["#393E41","#E94F37","#A1D363", "#1C89BF"];
+    var ran = Math.floor(Math.random() * colors.length);
+    return <Circle bgColor={colors[ran]}/>;
+}
 
 ReactDOM.render(
     <div>
-        {theCircle}
+        {showCircle()}
     </div>
     ,destination
 
