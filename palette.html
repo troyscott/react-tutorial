@@ -23,10 +23,15 @@
 var Square = React.createClass({
 
     render:function(){
-
+        var squareStyle = {
+            height:150,
+            backgroundColor:"#FF6663"
+        };
         return(
 
-        <p>Nothing</p>
+        <div style={squareStyle}>
+
+        </div>
 
         );
 
@@ -36,8 +41,14 @@ var Square = React.createClass({
 var Label = React.createClass({
 
     render:function(){
+        var labelStyle = {
+            fontFamily:"sans-serif",
+            fontWeight:"bold",
+            padding:13,
+            margin:0
+        };
         return(
-        <p>Nothing</p>
+        <p style={labelStyle}>#FF6663</p>
 
         );
     }
@@ -46,9 +57,20 @@ var Label = React.createClass({
 var Card = React.createClass({
 
     render:function(){
+        var cardStyle = {
+            height:200,
+            width:150,
+            padding:0,
+            backgroundColor:"#FFF",
+            WebkitFilter:"drop-shadow(0px 0px 5px #666)",
+            filter:"drop-shadow(0px 0px 5px #666)"
+        };
 
         return(
-            <div></div>
+            <div style={cardStyle}>
+            <Square/>
+            <Label/>
+            </div>
 
         );
     }
@@ -57,7 +79,8 @@ var Card = React.createClass({
 var destination = document.querySelector("#container");
 
 ReactDOM.render(
-    <div>Empty
+    <div>
+    <Card/>
     </div>,
     destination
 );
