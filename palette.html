@@ -25,7 +25,7 @@ var Square = React.createClass({
     render:function(){
         var squareStyle = {
             height:150,
-            backgroundColor:"#FF6663"
+            backgroundColor:this.props.color
         };
         return(
 
@@ -48,7 +48,7 @@ var Label = React.createClass({
             margin:0
         };
         return(
-        <p style={labelStyle}>#FF6663</p>
+        <p style={labelStyle}>{this.props.color}</p>
 
         );
     }
@@ -68,8 +68,8 @@ var Card = React.createClass({
 
         return(
             <div style={cardStyle}>
-            <Square/>
-            <Label/>
+            <Square color={this.props.color}/>
+            <Label color={this.props.color}/>
             </div>
 
         );
@@ -80,7 +80,7 @@ var destination = document.querySelector("#container");
 
 ReactDOM.render(
     <div>
-    <Card/>
+    <Card color="#FF6663"/>
     </div>,
     destination
 );
