@@ -35,6 +35,19 @@ var Counter = React.createClass({
     }
 });
 
+var PlusButton = React.createClass({
+
+    render: function() {
+     return (
+        <button onClick={this.props.clickHandler}>
+        +
+        </button>
+    );
+
+    }
+
+});
+
 var CounterParent = React.createClass({
     getInitialState:function(){
         return {
@@ -77,7 +90,7 @@ var CounterParent = React.createClass({
         return (
             <div style={backgroundStyle}>
                 <Counter display={this.state.count}/>
-                <button onClick={this.increase} style={buttonStyle}>+</button>
+                <PlusButton clickHandler={this.increase} />
             </div>
         );
 
