@@ -13,7 +13,16 @@
 <div id="react-container"></div>
 
 <script>
-var dish = React.createElement("h1", null, "Baked Salmon" );
+
+var items = [
+    "1 lb Salmon",
+    "1 cup Pine Nuts",
+    "2 cups Butter Lettuce"
+];
+
+dish = React.createElement("ul", {className: "ingredients"},
+    items.map((ingredient, i) => React.createElement("li", {key: i}, ingredient))
+);
 ReactDOM.render(dish, document.getElementById('react-container'));
 
 </script>
