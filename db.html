@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+    <title>React with Babel</title>
+    <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <style>
+    body {
+      background-color: lightblue;
+    }
+    input {
+      padding: 5px;
+      margin: 5px;
+      border:1px;
+    }
+
+    </style>
+</head>
+<body>
+<div id="container"></div>
+
+<script type="text/babel">
+var destination = document.querySelector("#container");
+// Initialize the data store
+var appStore = {
+  exercises: [
+  {name: "pushups"},{name: "situps"}
+  ]
+}
+
+console.log(appStore)
+localStorage.setItem("exercises", JSON.stringify(appStore.exercises));
+
+var action = function(e) {
+  e.preventDefault()
+  console.log("submit data ...")
+  var f = document.getElementById("frm");
+  // localStorage can only store string values
+  // Use JSON.stringify to store objects and then
+  // use JSON.parse to retrieve the objects
+
+  // Retrieve data from localStorage
+  // The entire exercise array is retreived
+  var d = JSON.parse(localStorage.exercises)
+  console.log(d)
+  for (var i = 0; i < f.length ;i++) {
+        var text = f.elements[i].value
+        console.log(text)
+        console.log(typeof(text))
+        if (text.length > 0){
+          var msg = `${text} has been added.`
+          document.getElementById('ex').innerHTML = msg
+          d.push({name: text})
+          console.log('Add json object ....')
+          console.log(d)
+        }
+    }
+
+  localStorage.setItem("exercises", JSON.stringify(d))
+  console.log("Retrieve data from localStorage")
+  console.log( JSON.parse(localStorage.exercises))
+
+}
+
+ReactDOM.render(
+    <div>
+        Excercise:
+        <form id="frm" onSubmit={action}>
+        <p>
+        <input type="text" />
+        <input type="submit" />
+        </p>
+        <p id="ex"></p>
+        </form>
+    </div>,
+    destination
+);
+
+</script>
+</body>
+</html>
