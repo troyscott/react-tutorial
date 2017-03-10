@@ -19,9 +19,7 @@
 </head>
 <body>
 <div id="container"></div>
-
 <script type="text/babel">
-var destination = document.querySelector("#container");
 // Initialize the data store
 var appStore = {
   exercises: [
@@ -29,50 +27,80 @@ var appStore = {
   ]
 }
 
+var destination = document.querySelector("#container");
 console.log(appStore)
-localStorage.setItem("exercises", JSON.stringify(appStore.exercises));
+
+// localStorage can only store string values
+// Use JSON.stringify to store objects and then
+// use JSON.parse to retrieve the objects
+
+var setObj = function(key, data) {
+  localStorage.setItem(key, JSON.stringify(data))
+}
+
+var getObj = function(key) {
+  // Retrieve data from localStorage
+  // The entire exercise array is retreived
+  //var d = JSON.parse(localStorage['exercises'])
+  return JSON.parse(localStorage[key])
+}
+
+// Application
+
+// Get App Data
+setObj("exercises", appStore.exercises)
 
 var action = function(e) {
   e.preventDefault()
   console.log("submit data ...")
-  var f = document.getElementById("frm");
-  // localStorage can only store string values
-  // Use JSON.stringify to store objects and then
-  // use JSON.parse to retrieve the objects
-
-  // Retrieve data from localStorage
-  // The entire exercise array is retreived
-  var d = JSON.parse(localStorage.exercises)
+  var d = getObj('exercises')
   console.log(d)
-  for (var i = 0; i < f.length ;i++) {
-        var text = f.elements[i].value
-        console.log(text)
-        console.log(typeof(text))
-        if (text.length > 0){
-          var msg = `${text} has been added.`
-          document.getElementById('ex').innerHTML = msg
-          d.push({name: text})
-          console.log('Add json object ....')
-          console.log(d)
-        }
-    }
-
-  localStorage.setItem("exercises", JSON.stringify(d))
+  var f = document.getElementById("frm");
+  var exercise = f.elements[0].value
+  console.log(exercise)
+  if (exercise.length > 0){
+    var msg = `${exercise} has been added.`
+    document.getElementById('ex').innerHTML = msg
+    d.push({name: exercise})
+    console.log('Add json object ....')
+    console.log(d)
+  }
+  setObj("exercises", d)
   console.log("Retrieve data from localStorage")
   console.log( JSON.parse(localStorage.exercises))
-
+  alert('localStorage: ' + getObj('exercises')[d.length - 1].name)
 }
+
+const AddExercise = React.createClass ({
+  render(){
+    return (
+      <div>
+      Excercise:
+      <form id="frm" onSubmit={action}>
+        <p>
+          <input type="text" /><input type="submit" />
+        </p>
+        <p id="ex"></p>
+      </form>
+      </div>
+    )
+  }
+})
+
+const Workout = React.createClass ({
+  render(){
+    return (
+      <div>
+      Workout Table here....
+      </div>
+    )
+  }
+})
 
 ReactDOM.render(
     <div>
-        Excercise:
-        <form id="frm" onSubmit={action}>
-        <p>
-        <input type="text" />
-        <input type="submit" />
-        </p>
-        <p id="ex"></p>
-        </form>
+      <AddExercise />
+      <Workout />
     </div>,
     destination
 );
