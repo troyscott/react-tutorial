@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+    <title>React with Babel</title>
+    <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <style>
+    body {
+      background-color: lightblue;
+    }
+    input {
+      padding: 5px;
+      margin: 5px;
+      border:1px;
+    }
+
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/babel">
+// Initialize the data store
+var appStore = {
+  exercises: [
+  {name: "pushups"},{name: "situps"}
+  ]
+}
+
+var destination = document.querySelector("#container");
+console.log(appStore)
+
+// localStorage can only store string values
+// Use JSON.stringify to store objects and then
+// use JSON.parse to retrieve the objects
+
+var setObj = function(key, data) {
+  localStorage.setItem(key, JSON.stringify(data))
+}
+
+var getObj = function(key) {
+  // Retrieve data from localStorage
+  // The entire exercise array is retreived
+  //var d = JSON.parse(localStorage['exercises'])
+  return JSON.parse(localStorage[key])
+}
+
+// Application
+
+// Get App Data
+setObj("exercises", appStore.exercises)
+
+var action = function(e) {
+  e.preventDefault()
+  console.log("submit data ...")
+  var d = getObj('exercises')
+  console.log(d)
+  var f = document.getElementById("frm");
+  var exercise = f.elements[0].value
+  console.log(exercise)
+  if (exercise.length > 0){
+    var msg = `${exercise} has been added.`
+    document.getElementById('ex').innerHTML = msg
+    d.push({name: exercise})
+    console.log('Add json object ....')
+    console.log(d)
+  }
+  setObj("exercises", d)
+  console.log("Retrieve data from localStorage")
+  console.log( JSON.parse(localStorage.exercises))
+  alert('localStorage: ' + getObj('exercises')[d.length - 1].name)
+}
+
+const AddExercise = React.createClass ({
+  render(){
+    return (
+      <div>
+      Excercise:
+      <form id="frm" onSubmit={action}>
+        <p>
+          <input type="text" /><input type="submit" />
+        </p>
+        <p id="ex"></p>
+      </form>
+      </div>
+    )
+  }
+})
+
+const Workout = React.createClass ({
+  render(){
+    return (
+      <div>
+      Workout Table here....
+      </div>
+    )
+  }
+})
+
+ReactDOM.render(
+    <div>
+      <AddExercise />
+      <Workout />
+    </div>,
+    destination
+);
+
+</script>
+</body>
+</html>
